@@ -2,7 +2,8 @@ import openai
 import streamlit as st
 import os
 
-GPT_MODEL = 'gpt-3.5-turbo'
+# GPT_MODEL = 'gpt-3.5-turbo'
+GPT_MODEL = 'gpt-4-1106-preview'
 
 def initialize_conversation():
     system_message = 'You are a helpful assistant'
