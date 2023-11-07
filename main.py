@@ -8,11 +8,11 @@ GPT_MODEL = 'gpt-4-1106-preview'
 def initialize_conversation():
     system_message = 'You are a helpful assistant'
     hello_message = '안녕하세요, 무엇을 도와드릴까요?'
-    msgs = list()
-    system = {'role':'system', 'content': system_message}
-    hello = {'role':'assistant', 'content': hello_message}
-    msgs += [system, hello]
-    return msgs
+    return [
+        {'role': 'system', 'content': system_message},
+        {'role': 'assistant', 'content': hello_message}
+    ]
+
 
 def main():
     st.title('ChatGPT - for personal use')    
