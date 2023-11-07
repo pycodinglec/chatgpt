@@ -32,11 +32,14 @@ def main():
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             full_response = ""
-            responses = openai.ChatCompletion.create(
-                model = GPT_MODEL,
-                messages = st.session_state['msgs'],
-                stream = True,
-            )
+            try:
+                responses = openai.ChatCompletion.create(
+                    model=GPT_MODEL,
+                    messages=st.session_state['msgs'],
+                    stream=True,
+                )
+            except openai.error.OpenAIError as e:
+                st.error(f"An error occurred: {e}")
             for response in responses:
                 full_response += response.choices[0].delta.get("content", "")
                 message_placeholder.markdown(full_response + "▌")
