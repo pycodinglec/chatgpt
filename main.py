@@ -1,7 +1,9 @@
-import openai
+from openai import OpenAI
 import streamlit as st
 import os
 import hashlib
+
+client = OpenAI()
 
 # GPT_MODEL = 'gpt-3.5-turbo'
 GPT_MODEL = 'gpt-4-1106-preview'
@@ -15,8 +17,8 @@ def initialize_conversation():
     ]
 
 def chatbot_page():
-    st.title('ChatGPT - for personal use')    
-    openai.api_key = os.getenv('OPENAI_API_KEY') # for debug
+    st.title('ChatGPT - for personal use')
+    #openai.api_key = os.getenv('OPENAI_API_KEY') # for debug
      
     if 'msgs' not in st.session_state:
         st.session_state['msgs'] = initialize_conversation()
@@ -33,12 +35,12 @@ def chatbot_page():
             message_placeholder = st.empty()
             full_response = ""
             try:
-                responses = openai.ChatCompletion.create(
+                responses = client.chat.completions.create(
                     model=GPT_MODEL,
                     messages=st.session_state['msgs'],
                     stream=True,
                 )
-            except openai.error.OpenAIError as e:
+            except Exception as e:
                 st.error(f"An error occurred: {e}")
             for response in responses:
                 full_response += response.choices[0].delta.get("content", "")
