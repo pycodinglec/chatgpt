@@ -3,9 +3,6 @@ import streamlit as st
 import os
 import hashlib
 
-client = OpenAI()
-
-# GPT_MODEL = 'gpt-3.5-turbo'
 GPT_MODEL = 'gpt-4-1106-preview'
 
 def initialize_conversation():
@@ -17,8 +14,8 @@ def initialize_conversation():
     ]
 
 def chatbot_page():
+    client = OpenAI()
     st.title('ChatGPT - for personal use')
-    #openai.api_key = os.getenv('OPENAI_API_KEY') # for debug
      
     if 'msgs' not in st.session_state:
         st.session_state['msgs'] = initialize_conversation()
