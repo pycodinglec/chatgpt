@@ -45,8 +45,9 @@ def chatbot_page():
             for response in responses:
                 #full_response += response.choices[0]['delta'].get("content", "")
                 #message_placeholder.markdown(full_response + "▌")
-                print(response)
-            message_placeholder.markdown(full_response)
+                #print(response)
+                message_placeholder.markdown(response)
+            #message_placeholder.markdown(full_response)
         st.session_state['msgs'].append({"role": "assistant", "content": full_response})
 
 def verify_password(input_password):
