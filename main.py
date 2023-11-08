@@ -43,7 +43,7 @@ def chatbot_page():
             except Exception as e:
                 st.error(f"An error occurred: {e}")
             for response in responses:
-                full_response += response.choices[0].delta.get("content", "")
+                full_response += response.choices[0]['delta'].get("content", "")
                 message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
         st.session_state['msgs'].append({"role": "assistant", "content": full_response})
