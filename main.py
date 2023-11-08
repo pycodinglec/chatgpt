@@ -1,6 +1,7 @@
 import openai
 import streamlit as st
 import os
+import hashlib
 
 # GPT_MODEL = 'gpt-3.5-turbo'
 GPT_MODEL = 'gpt-4-1106-preview'
@@ -13,8 +14,7 @@ def initialize_conversation():
         {'role': 'assistant', 'content': hello_message}
     ]
 
-
-def main():
+def chatbot_page():
     st.title('ChatGPT - for personal use')    
     openai.api_key = os.getenv('OPENAI_API_KEY') # for debug
      
@@ -45,6 +45,23 @@ def main():
                 message_placeholder.markdown(full_response + "▌")
             message_placeholder.markdown(full_response)
         st.session_state['msgs'].append({"role": "assistant", "content": full_response})
+
+def verify_password(input_password):
+    correct_password_hash = os.getenv('PASSWORD_HASH')
+    password_hash = hashlib.md5(input_password.encode()).hexdigest()
+    return password_hash == correct_password_hash
+
+def main():
+    with st.container():
+        input_password = st.text_input("패스워드를 입력하세요", type="password")
+        if st.button("로그인"):
+            if verify_password(input_password):
+                st.session_state['authenticated'] = True
+            else:
+                st.error("패스워드가 잘못되었습니다.")
+
+    if st.session_state.get('authenticated', False):
+        chatbot_page()
 
 if __name__=='__main__':
     main()
