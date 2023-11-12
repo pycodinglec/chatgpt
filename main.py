@@ -6,8 +6,8 @@ import hashlib
 GPT_MODEL = 'gpt-4-1106-preview'
 
 def initialize_conversation():
-    system_message = 'You are a helpful assistant'
-    hello_message = '안녕하세요, 무엇을 도와드릴까요?'
+    system_message = '너는 통계 학습을 도와주는 튜터야. 너는 통계 산출에 관련된 모든 질문에 항상 친절하게 대답해. 그러나 통계와 관련 없는 요청은 정중히 거절해.'
+    hello_message = '오늘은 어떤 데이터를 분석해볼까요?'
     return [
         {'role': 'system', 'content': system_message},
         {'role': 'assistant', 'content': hello_message}
@@ -15,7 +15,7 @@ def initialize_conversation():
 
 def chatbot_page():
     client = OpenAI()
-    st.title('ChatGPT - for personal use')
+    st.title('통계 학습 튜터')
      
     if 'msgs' not in st.session_state:
         st.session_state['msgs'] = initialize_conversation()
@@ -29,6 +29,7 @@ def chatbot_page():
         with st.chat_message("user"):
             st.markdown(prompt)
         with st.chat_message("assistant"):
+            
             message_placeholder = st.empty()
             full_response = ""
             try:
