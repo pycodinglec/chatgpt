@@ -49,7 +49,7 @@ def chatbot_page():
 
 def verify_password(input_password):
     correct_password_hash = os.getenv('PASSWORD_HASH')
-    password_hash = hashlib.md5(input_password.encode()).hexdigest()
+    password_hash = hashlib.sha256(input_password.encode()).hexdigest()
     return password_hash == correct_password_hash
 
 def main():
